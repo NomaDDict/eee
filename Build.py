@@ -25,17 +25,18 @@ def parse_html_for_versions(html_content):
             version_numbers.append(match.group())
     return version_numbers
 
-def save_build_numbers_to_txt(version_numbers, output_file_path):
+def save_version_numbers_to_txt(version_numbers, output_file_path):
     with open(output_file_path, 'w') as file:
         for version in version_numbers:
-            file.write(f"{version}\n")
+            extracted_version = f"{version[0]}.{version[1]}"
+            file.write(f"{extracted_version}\n")
 
 if __name__ == "__main__":
     # URL of the website you want to scrape
     url = "https://www.manageengine.com/products/ad-manager/release-notes.html"
     
     # File path where you want to save the extracted version numbers
-    output_file_path = os.path.join(os.getcwd(), "build_numbers.txt")
+    output_file_path = os.path.join(os.getcwd(), "version_numbers.txt")
     
     # Step 1: Fetch HTML content from website
     html_content = fetch_html_content(url)
@@ -44,5 +45,5 @@ if __name__ == "__main__":
         # Step 2: Parse HTML content for version numbers
         version_numbers = parse_html_for_versions(html_content)
         
-        # Step 3: Save the build numbers to a text file
-        save_build_numbers_to_txt(version_numbers, output_file_path)
+        # Step 3: Save the version numbers to a text file
+        save_version_numbers_to_txt(version_numbers, output_file_path)
